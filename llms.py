@@ -267,7 +267,7 @@ class Gemini:
         # print(len(self.messages))
         return response.text
     
-    def add_user_message(self, frame, user_msg):
+    def add_user_message(self, frame=None, user_msg=None):
 
         if frame is not None and user_msg is not None:
             image_data = self.encode_image(frame)

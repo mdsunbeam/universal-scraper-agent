@@ -6,3 +6,7 @@ __pycache__
 test_1.jpg
 meme.jpg
 test.py
+chromedriver-mac-arm64/
+chromedriver-mac-arm64.zip
+full_screenshot.png
+.DS_Store

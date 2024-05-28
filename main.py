@@ -1,4 +1,4 @@
-from llms import GPT, Claude3, Gemini, Llama3
+from llms import GPT
 from utils import load_json_as_dict, save_json_to_file, explore_links
 import cv2
 import os
@@ -13,13 +13,10 @@ if __name__ == "__main__":
     # explore_links(website_url)
 
     MODELS = {
-    "OpenAI": ["gpt-4-turbo", "gpt-4o", "gpt-3.5-turbo"], 
-    "Anthropic": ["claude-3-opus-20240229", "claude-3-sonnet-20240229", "claude-3-haiku-20240307"], 
-    "Google": ["gemini-1.5-pro-latest", "gemini-pro", "gemini-pro-vision", "gemini-1.5-flash-latest"], 
-    "Meta": ["llama3-70b-8192", "llama3-8b-8192"]
+    "OpenAI": ["gpt-4-turbo", "gpt-4o", "gpt-3.5-turbo"]
     }
 
-    desired_format = load_json_as_dict("output_format.json")
+    desired_format = load_json_as_dict("specify_output.json")
     
     system_message = f"""You are a web-scraping agent that can decide how to scrape information
     from webpages. Please organize the JSON scraping in the following format: \n

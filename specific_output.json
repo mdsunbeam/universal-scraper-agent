@@ -1,5 +1,4 @@
 {
-    "Website": "best description of the website and content, be detailed",
-    "Articles": ["list of article titles"],
-    "Navigation Bar": ["list of nav bar or menu items"]
+    "Description" : "detailed description of the contents of the webpage",
+    "Interesting Feature" : ["list of any peculiar, interesting, or unique features about the page"]
 }

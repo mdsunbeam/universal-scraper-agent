@@ -2,21 +2,19 @@ from llms import GPT
 from utils import load_json_as_dict, save_json_to_file, explore_links
 import cv2
 import os
-import time
-
 
 
 if __name__ == "__main__":
 
-    # # Shallow exploration of links on website
-    # website_url = 'https://mdsunbeam.com/'  # Replace with your target website
-    # explore_links(website_url)
+    # Shallow exploration of links on website
+    website_url = 'https://mdsunbeam.com/'  # Replace with your target website
+    explore_links(website_url)
 
     MODELS = {
     "OpenAI": ["gpt-4-turbo", "gpt-4o", "gpt-3.5-turbo"]
     }
 
-    desired_format = load_json_as_dict("specify_output.json")
+    desired_format = load_json_as_dict("specific_output.json")
     
     system_message = f"""You are a web-scraping agent that can decide how to scrape information
     from webpages. Please organize the JSON scraping in the following format: \n

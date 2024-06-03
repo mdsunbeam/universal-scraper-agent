@@ -79,11 +79,11 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-Welcome to LLM Hub, a streamlined repository designed to facilitate access to the world's leading large language models (LLMs). This project simplifies the integration of major LLMs, primarily through their APIs.
+Universal Scraping Agent is a versatile and powerful tool for scraping websites and processing images of webpages to extract specific data using Selenium and multimodal large language models (LLMs). This project allows users to define their scraping requirements through a JSON configuration, making it easy to customize and automate data extraction tasks.
 
 ### Supported Models
 
-In the initial release, we support:
+In the initial release, we support the use of:
 
 - **GPT models from OpenAI**: Harness the power of OpenAI's cutting-edge language models.
 - **Claude 3 models from Anthropic**: Experience the nuanced understanding of Anthropic's Claude 3.
@@ -92,8 +92,11 @@ In the initial release, we support:
 
 ### Key Features
 
-- **Simplicity at its Core**: We believe that interacting with frontier AI models should be straightforward and fuss-free. Our interface is crafted to ensure ease of use.
-- **Intuitive Interaction**: Users can easily send inputs and manage dialogue histories, making AI conversations more seamless and effective.
+- **Automated Web Scraping**: Uses Selenium to navigate and scrape data from websites.
+- **Image Processing**: Captures screenshots of webpages and processes them using LLMs.
+- **Customizable Data Extraction**: Users can specify the data to be scraped using a JSON configuration.
+- **Dynamic Content Handling**: Capable of handling dynamic web content and AJAX-loaded elements.
+- **Multi-Platform Support**: Compatible with Windows, macOS, and Linux.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -101,7 +104,7 @@ In the initial release, we support:
 <!-- GETTING STARTED -->
 ## Getting Started
 
-The first thing to set up is your OpenAI, Anthropic, Google, and Groq API keys. You need OpenAI for the GPT models, Anthropic for the Claude 3 models, Google for the Gemini models, and finally Groq for Llama 3 models.
+The first thing to set up is your OpenAI, Anthropic, Google, and Groq API keys. You need OpenAI for the GPT models, Anthropic for the Claude 3 models, Google for the Gemini models, and finally Groq for Llama 3 models. You only need one of the LLMs to begin automated scraping.
 
 ### Prerequisites
 
@@ -116,13 +119,13 @@ Next, create four text files called `OPENAI_API_KEY.txt`, `ANTHROPIC_API_KEY.txt
 
 1. Make Python virtual environment
    ```sh
-   python3.10 -m venv llm-hub-env
-   source llm-hub-env/bin/activate
+   python3.10 -m venv scraping-agent-env
+   source scraping-agent-env/bin/activate
    ```
 2. Clone the repo
    ```sh
-   git clone https://github.com/mdsunbeam/llm-hub.git
-   cd llm-hub
+   git clone https://github.com/mdsunbeam/universal-scraping-agent.git
+   cd universal-scraping-agent
    ```
 3. Install Python packages
    ```sh
@@ -136,7 +139,52 @@ Next, create four text files called `OPENAI_API_KEY.txt`, `ANTHROPIC_API_KEY.txt
 <!-- USAGE EXAMPLES -->
 ## Usage
 
-This is a simple example of how to send in images and text. Note, **Llama 3** is currently not multimodal; you will need to use an embedding model if you want to pass along images.
+1. Define your scraping configuration by creating a JSON file to specify what data you want to extract.
+
+```json
+{
+    "Description" : "detailed description of the contents of the webpage",
+    "Interesting Feature" : ["list of any peculiar, interesting, or unique features about the page"]
+}
+```
+
+2. Run the scraping agent.
+
+```python
+from llms import GPT
+from utils import load_json_as_dict, save_json_to_file, explore_links
+import cv2
+import os
+
+
+if __name__ == "__main__":
+
+    # Shallow exploration of links on website
+    website_url = 'https://mdsunbeam.com/'  # Replace with your target website
+    explore_links(website_url)
+
+    MODELS = {
+    "OpenAI": ["gpt-4-turbo", "gpt-4o", "gpt-3.5-turbo"]
+    }
+
+    desired_format = load_json_as_dict("specific_output.json")
+    
+    system_message = f"""You are a web-scraping agent that can decide how to scrape information
+    from webpages. Please organize the JSON scraping in the following format: \n
+    {desired_format}
+    """
+
+    # save_json_to_file(gpt4o.generate_response(), "scrape_results.json")
+    directory_path = "images"
+    for filename in os.listdir(directory_path):
+        file_path = os.path.join(directory_path, filename)
+        if os.path.isfile(file_path):
+            webpage_image = cv2.imread(file_path)
+            gpt4o = GPT(model_name=MODELS["OpenAI"][1], system_message=system_message)
+            gpt4o.add_user_message(frame=webpage_image, user_msg="Please give me results in the desired JSON form.")
+            save_json_to_file(gpt4o.generate_response(), f"scraped_results/result_{filename}.json")
+
+```
 
 ### Multimodal Example
 ```python
@@ -169,39 +217,13 @@ if __name__ == "__main__":
     print("Gemini 1.5 Pro: ", gemini_1_5_pro.generate_response())
 ```
 
-### Text-Only Example
-```python
-from llms import GPT, Claude3, Gemini, Llama3
+or
 
-if __name__ == "__main__":
-
-    MODELS = {
-    "OpenAI": ["gpt-4-turbo", "gpt-4o", "gpt-3.5-turbo"], 
-    "Anthropic": ["claude-3-opus-20240229", "claude-3-sonnet-20240229", "claude-3-haiku-20240307"], 
-    "Google": ["gemini-1.5-pro-latest", "gemini-pro", "gemini-pro-vision", "gemini-1.5-flash-latest"], 
-    "Meta": ["llama3-70b-8192", "llama3-8b-8192"]
-    }
-
-    system_message = "You are a helpful assistant."
-    text = "When was George Washington born?"
-
-    gpt4turbo = GPT(system_message=system_message)
-    gpt4turbo.add_user_message(frame=None, user_msg=text)
-    print("GPT4Turbo: ", gpt4turbo.generate_response())
-
-    opus = Claude3(system_message=system_message)
-    opus.add_user_message(frame=None, user_msg=text)
-    print("Claude 3 Opus: ", opus.generate_response())
-
-    gemini_1_5_pro = Gemini(system_message=system_message)
-    gemini_1_5_pro.add_user_message(frame=None, user_msg=text)
-    print("Gemini 1.5 Pro: ", gemini_1_5_pro.generate_response())
-
-    llama3_70b = Llama3(model_name=MODELS["Meta"][0], system_message=system_message)
-    llama3_70b.add_user_message(frame=None, user_msg=text)
-    print("Llama3 70B: ", llama3_70b.generate_response())
+```sh
+python main.py
 ```
 
+3. View scraping results in the `scraped_results/` folder.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 

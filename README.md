@@ -198,7 +198,7 @@ python main.py
 <!-- ROADMAP -->
 ## Roadmap
 
-- [ ] add a key in the results that saved exact URL
+- [ ] add a key in the results that saves exact URL
 - [ ] error handling during shallow exploration
 
 See the [open issues](https://github.com/mdsunbeam/llm-hub/issues) for a full list of proposed features (and known issues).

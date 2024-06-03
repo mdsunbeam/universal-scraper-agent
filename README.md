@@ -30,23 +30,23 @@
 <!-- PROJECT LOGO -->
 <br />
 <div align="center">
-  <a href="https://github.com/mdsunbeam/llm-hub">
-    <img src="images/llm-hub-logo.jpg" alt="Logo" width="160" height="160">
+  <a href="https://github.com/mdsunbeam/universal-scraper-agent">
+    <img src="misc/scraper-agent-logo.png" alt="Logo" width="160" height="160">
   </a>
 
-<h3 align="center">Large Language Model Hub</h3>
+<h3 align="center">Universal Scraper Agent</h3>
 
   <p align="center">
-    Easily start your project with the frontier models of OpenAI, Anthropic, Google, and Meta AI.
+    Easily extract data from the web through large language models (LLMs) by specifying the format through JSON files.
     <br />
     <!-- <a href="https://github.com/mdsunbeam/llm-hub"><strong>Explore the docs »</strong></a>
     <br />
     <br />
     <a href="https://github.com/mdsunbeam/llm-hub">View Demo</a> -->
     <!-- · -->
-    <a href="https://github.com/mdsunbeam/llm-hub/issues/new?labels=bug&template=bug-report---.md">Report Bug</a>
+    <a href="https://github.com/mdsunbeam/universal-scraper-agent/issues/new?labels=bug&template=bug-report---.md">Report Bug</a>
     ·
-    <a href="https://github.com/mdsunbeam/llm-hub/issues/new?labels=enhancement&template=feature-request---.md">Request Feature</a>
+    <a href="https://github.com/mdsunbeam/universal-scraper-agent/issues/new?labels=enhancement&template=feature-request---.md">Request Feature</a>
   </p>
 </div>
 
@@ -85,10 +85,9 @@ Universal Scraping Agent is a versatile and powerful tool for scraping websites 
 
 In the initial release, we support the use of:
 
-- **GPT models from OpenAI**: Harness the power of OpenAI's cutting-edge language models.
-- **Claude 3 models from Anthropic**: Experience the nuanced understanding of Anthropic's Claude 3.
-- **Gemini models from Google**: Leverage Google's advanced Gemini models for robust AI interactions.
-- **Llama 3 models from Meta AI**: Dive into the depth of knowledge encapsulated by Meta's Llama 3.
+- **GPT models from OpenAI**
+- **Claude 3 models from Anthropic**
+- **Gemini models from Google**
 
 ### Key Features
 
@@ -119,13 +118,13 @@ Next, create four text files called `OPENAI_API_KEY.txt`, `ANTHROPIC_API_KEY.txt
 
 1. Make Python virtual environment
    ```sh
-   python3.10 -m venv scraping-agent-env
-   source scraping-agent-env/bin/activate
+   python3.10 -m venv scraper-agent-env
+   source scraper-agent-env/bin/activate
    ```
 2. Clone the repo
    ```sh
-   git clone https://github.com/mdsunbeam/universal-scraping-agent.git
-   cd universal-scraping-agent
+   git clone https://github.com/mdsunbeam/universal-scraper-agent.git
+   cd universal-scraper-agent
    ```
 3. Install Python packages
    ```sh
@@ -148,7 +147,7 @@ Next, create four text files called `OPENAI_API_KEY.txt`, `ANTHROPIC_API_KEY.txt
 }
 ```
 
-2. Run the scraping agent.
+2. Run the scraper agent.
 
 ```python
 from llms import GPT
@@ -185,40 +184,7 @@ if __name__ == "__main__":
             save_json_to_file(gpt4o.generate_response(), f"scraped_results/result_{filename}.json")
 
 ```
-
-### Multimodal Example
-```python
-from llms import GPT, Claude3, Gemini
-import cv2
-
-if __name__ == "__main__":
-
-    MODELS = {
-    "OpenAI": ["gpt-4-turbo", "gpt-4o", "gpt-3.5-turbo"], 
-    "Anthropic": ["claude-3-opus-20240229", "claude-3-sonnet-20240229", "claude-3-haiku-20240307"], 
-    "Google": ["gemini-1.5-pro-latest", "gemini-pro", "gemini-pro-vision", "gemini-1.5-flash-latest"], 
-    "Meta": ["llama3-70b-8192", "llama3-8b-8192"]
-    }
-
-    logo = cv2.imread("images/llm-hub-logo.jpg")
-    system_message = "You are a helpful assistant."
-    text = "Describe what you see in this image."
-
-    gpt4turbo = GPT(model_name=MODELS["OpenAI"][0], system_message=system_message)
-    gpt4turbo.add_user_message(frame=logo, user_msg=text)
-    print("GPT4Turbo: ", gpt4turbo.generate_response())
-
-    opus = Claude3(model_name=MODELS["Anthropic"][0], system_message=system_message)
-    opus.add_user_message(frame=logo, user_msg=text)
-    print("Claude 3 Opus: ", opus.generate_response())
-
-    gemini_1_5_pro = Gemini(model_name=MODELS["Google"][0], system_message=system_message)
-    gemini_1_5_pro.add_user_message(frame=logo, user_msg=text)
-    print("Gemini 1.5 Pro: ", gemini_1_5_pro.generate_response())
-```
-
 or
-
 ```sh
 python main.py
 ```
@@ -232,18 +198,8 @@ python main.py
 <!-- ROADMAP -->
 ## Roadmap
 
-- [x] Handling of image and text with all frontier models
-- [x] Make example of all GPT, Claude 3, and Gemini family of models
-- [ ] Add tool calling for all the classes
-- [ ] Add separate, detailed documentation
-- [ ] Add more context management functions
-  - [x] Add function to print role messages
-  - [x] Add function to delete specific role messages
-  - [ ] Add example of context management function
-- [x] Llama 3 (set up probably with Groq API)
-- [ ] Pass arbitrary amount of messages in one go
-- [ ] Poll all frontier models for the same prompt
-- [ ] Reproduce results on popular LLM and multimodal datasets 
+- [ ] add a key in the results that saved exact URL
+- [ ] error handling during shallow exploration
 
 See the [open issues](https://github.com/mdsunbeam/llm-hub/issues) for a full list of proposed features (and known issues).
 
@@ -283,21 +239,21 @@ Distributed under the MIT License. See `LICENSE` for more information.
 
 [@MdSunbeam](https://twitter.com/MdSunbeam) - mdsunbeam3.14@gmail.com
 
-Project Link: [https://github.com/mdsunbeam/llm-hub](https://github.com/mdsunbeam/llm-hub)
+Project Link: [https://github.com/mdsunbeam/universal-scraper-agent](https://github.com/mdsunbeam/universal-scraper-agent)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 <!-- MARKDOWN LINKS & IMAGES -->
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
-[contributors-shield]: https://img.shields.io/github/contributors/mdsunbeam/llm-hub.svg?style=for-the-badge
-[contributors-url]: https://github.com/mdsunbeam/llm-hub/graphs/contributors
-[forks-shield]: https://img.shields.io/github/forks/mdsunbeam/llm-hub.svg?style=for-the-badge
-[forks-url]: https://github.com/mdsunbeam/llm-hub/network/members
-[stars-shield]: https://img.shields.io/github/stars/mdsunbeam/llm-hub.svg?style=for-the-badge
-[stars-url]: https://github.com/mdsunbeam/llm-hub/stargazers
-[issues-shield]: https://img.shields.io/github/issues/mdsunbeam/llm-hub.svg?style=for-the-badge
-[issues-url]: https://github.com/mdsunbeam/llm-hub/issues
-[license-shield]: https://img.shields.io/github/license/mdsunbeam/llm-hub.svg?style=for-the-badge
-[license-url]: https://github.com/mdsunbeam/llm-hub/blob/main/LICENSE
+[contributors-shield]: https://img.shields.io/github/contributors/mdsunbeam/universal-scraper-agent.svg?style=for-the-badge
+[contributors-url]: https://github.com/mdsunbeam/universal-scraper-agent/graphs/contributors
+[forks-shield]: https://img.shields.io/github/forks/mdsunbeam/universal-scraper-agent.svg?style=for-the-badge
+[forks-url]: https://github.com/mdsunbeam/universal-scraper-agent/network/members
+[stars-shield]: https://img.shields.io/github/stars/mdsunbeam/universal-scraper-agent.svg?style=for-the-badge
+[stars-url]: https://github.com/mdsunbeam/universal-scraper-agent/stargazers
+[issues-shield]: https://img.shields.io/github/issues/mdsunbeam/universal-scraper-agent.svg?style=for-the-badge
+[issues-url]: https://github.com/mdsunbeam/universal-scraper-agent/issues
+[license-shield]: https://img.shields.io/github/license/mdsunbeam/universal-scraper-agent.svg?style=for-the-badge
+[license-url]: https://github.com/mdsunbeam/universal-scraper-agent/blob/main/LICENSE
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
 [linkedin-url]: https://linkedin.com/in/mdsunbeam
